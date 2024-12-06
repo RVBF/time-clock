@@ -21,8 +21,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(prepend: [
         ]);
 
-        //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
     })->create();

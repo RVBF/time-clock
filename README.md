@@ -1,66 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Projeto de Registro de Ponto
 
-## About Laravel
+## 1. Introdução
+Este é um sistema de registro de ponto desenvolvido em **Laravel** com **MySQL**. Ele permite que funcionários registrem seus pontos e gestores gerenciem os registros e colaboradores. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 2. Requisitos do Sistema
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Antes de começar, certifique-se de ter instalado:
 
-## Learning Laravel
+- PHP 8.1 ou superior
+- Composer
+- MySQL 5.7 ou superior
+- Node.js e NPM (para assets do front-end)
+- Git
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 3. Clonando o Repositório
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1. Clone o projeto:
+   ```bash
+   git clone https://github.com/usuario/repository.git
+   cd repository
+   ```
 
-## Laravel Sponsors
+2. Configure as permissões:
+   ```bash
+   chmod -R 775 bootstrap/cache storage
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 4. Configuração do Ambiente
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+1. Duplique o arquivo `.env.example` e renomeie como `.env`:
+   ```bash
+   cp .env.example .env
+   ```
 
-## Contributing
+2. Edite o arquivo `.env` e configure os seguintes valores:
+   - Configuração do banco de dados:
+     ```
+     DB_CONNECTION=mysql
+     DB_HOST=127.0.0.1
+     DB_PORT=3306
+     DB_DATABASE=nome_do_banco
+     DB_USERNAME=usuario
+     DB_PASSWORD=senha
+     ```
+   - Chave da aplicação:
+     ```bash
+     php artisan key:generate
+     ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Configure a API de CEP:
+   ```
+   CEP_API_URL=https://viacep.com.br/ws/
+   ```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 5. Instalando Dependências
 
-## Security Vulnerabilities
+1. Instale as dependências PHP com Composer:
+   ```bash
+   composer install
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. Instale as dependências do front-end:
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 6. Configurando o Banco de Dados
+
+1. Crie as tabelas e configure os dados iniciais:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+2. Verifique se os dados de exemplo foram populados corretamente no banco.
+
+---
+
+## 7. Executando o Projeto
+
+1. Inicie o servidor local:
+   ```bash
+   php artisan serve
+   ```
+
+2. Acesse o sistema em:
+   ```
+   http://localhost:8000
+   ```
+
+---
+
+## 8. Funcionalidades Principais
+
+### Para Funcionários
+- Login
+- Registro de ponto
+- Alteração de senha
+
+### Para Administradores
+- Cadastro, edição e exclusão de funcionários
+- Listagem de registros de ponto com filtros por datas
+
+---
+
+## 9. Testes
+
+Execute os testes automatizados para garantir que o sistema está funcionando corretamente:
+
+```bash
+php artisan test
+```
+
+---
+
+## 10. Contribuição
+
+Se desejar contribuir com este projeto, faça um **fork**, crie uma **branch**, implemente suas alterações e envie um **pull request**.
+
+---
+
+## 11. Licença
+
+Este projeto está licenciado sob a licença MIT. Para mais detalhes, consulte o arquivo `LICENSE`.
+
+---
+
+Siga este guia para configurar e executar o projeto sem complicações. Se surgir qualquer dúvida, abra uma issue no repositório.
