@@ -102,7 +102,43 @@ Antes de começar, certifique-se de ter instalado:
 
 ---
 
-## 8. Funcionalidades Principais
+## 8. Usuários Criados no Seeder
+
+### Administradores
+- **Admin 1**:  
+  - Email: `admin1@ticto.com.br`  
+  - CPF: `12345678901`  
+  - Senha: `password`
+
+- **Admin 2**:  
+  - Email: `admin2@ticto.com.br`  
+  - CPF: `10987654321`  
+  - Senha: `password`
+
+- **Admin 3**:  
+  - Email: `admin3@ticto.com.br`  
+  - CPF: `11223344556`  
+  - Senha: `password`
+
+### Funcionários
+- **Employee 1**:  
+  - Email: `employee1@ticto.com.br`  
+  - CPF: `99887766554`  
+  - Senha: `password`
+
+- **Employee 2**:  
+  - Email: `employee2@ticto.com.br`  
+  - CPF: `88776655443`  
+  - Senha: `password`
+
+- **Employee 3**:  
+  - Email: `employee3@ticto.com.br`  
+  - CPF: `77665544332`  
+  - Senha: `password`
+
+---
+
+## 9. Funcionalidades Principais
 
 ### Para Funcionários
 - Login
@@ -115,7 +151,7 @@ Antes de começar, certifique-se de ter instalado:
 
 ---
 
-## 9. Testes
+## 10. Testes
 
 Execute os testes automatizados para garantir que o sistema está funcionando corretamente:
 
@@ -125,13 +161,13 @@ php artisan test
 
 ---
 
-## 10. Contribuição
+## 11. Contribuição
 
 Se desejar contribuir com este projeto, faça um **fork**, crie uma **branch**, implemente suas alterações e envie um **pull request**.
 
 ---
 
-## 11. Licença
+## 12. Licença
 
 Este projeto está licenciado sob a licença MIT. Para mais detalhes, consulte o arquivo `LICENSE`.
 
