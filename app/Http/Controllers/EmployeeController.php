@@ -2,16 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EmployeeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+
+        $employees = Employee::select(['*'])->get(); // Embora desnecessário, isso funcionará.
+
+  
+        return Inertia::render('Employee/Index', [
+            'employees' => $employees,
+        ]);
     }
 
     /**
@@ -19,7 +28,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Employee/Form');
     }
 
     /**

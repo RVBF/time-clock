@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Employee extends Authenticatable
+class Employee extends Model
 {
     use HasFactory;
 
@@ -25,9 +26,9 @@ class Employee extends Authenticatable
      * Relacionamento com o administrador.
      * Um funcionário pertence a um administrador.
      */
-    public function admin()
+    public function manager()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(User::class, 'admin_id', 'id');
     }
 
     /**
