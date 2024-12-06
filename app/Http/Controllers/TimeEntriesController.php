@@ -10,35 +10,49 @@ use Inertia\Inertia;
 
 class TimeEntriesController extends Controller
 {
-    public function index(Request $request)
-    {
-
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
-        
-        // Define datas padrão se não fornecidas na requisição
-        if (!$startDate) {
-            $startDate = Carbon::now()->subMonth()->format('Y-m-d'); // 1 mês atrás
-        }
-        if (!$endDate) {
-            $endDate = Carbon::now()->format('Y-m-d'); // Data atual
-        }
-
-        $query = TimeEntry::with(['employee', 'employee.manager']); // Carrega o funcionário e seu gestor
-
-        if ($startDate && $endDate) {
-            $query->whereBetween('registered_at', [$startDate, $endDate]);
-        }
-
-        $timeEntries = $query->paginate();
-
-        return Inertia::render('TimeEntries/Index', [
-            'timeEntries' => $timeEntries,
-        ]);
+    public function index(Request $request, $startDate=null, $endDate =null)
+    {    
+        return Inertia::render('TimeEntries/Index');
     }
+    
+    public function filter(Request $request, $startDate=null, $endDate =null)
+    {    
+        // Verifica se as datas foram passadas corretamente na requisição
+        if (!$startDate) {
+            $startDate = Carbon::now()->subMonth()->startOfDay(); // 1 mês atrás
+        } else {
+            $startDate = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay(); // Verifica o formato da data
+        }
+    
+        if (!$endDate) {
+            $endDate = Carbon::now()->addDays(30)->endOfDay(); // Data atual + 30 dias
+        } else {
+            $endDate = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay(); // Verifica o formato da data
+        }
+        
+        $query = TimeEntry::select('*')->with(['employee.user']);
+        $query->whereBetween('registered_at', [$startDate, $endDate]);
+    
+        $timeEntries = $query->get();
+        return response($timeEntries);
+    }
+
+    
+    
+
+    public function create()
+    {
+        return Inertia::render('TimeEntries/RegisterTimeEntries');
+    }
+
     public function store(Request $request)
     {
-        Employee::create($request->params);
+        $user = $request->user()->load('employee');
+        TimeEntry::create([
+            'type' => 'entrada',
+            'employee_id' => $user->employee->id,
+            'registered_at'=> Carbon::now(),
+        ]);
         return response()->json(['message' => 'Ponto registrado com sucesso']);
     }
 }

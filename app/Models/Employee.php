@@ -19,7 +19,8 @@ class Employee extends Model
         'birth_date',
         'cep',
         'address',
-        'admin_id',
+        'manager_id',
+        'user_id',
     ];
 
     /**
@@ -29,6 +30,11 @@ class Employee extends Model
     public function manager()
     {
         return $this->belongsTo(User::class, 'admin_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     /**
