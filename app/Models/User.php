@@ -12,10 +12,15 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $fillable = [
-        'name',
         'email',
+        'cpf',
+        'name',
+        'birth_date',
+        'position',
+        'cep',
+        'address',
+        'manager_id',
         'password',
-        'role',
     ];
 
     protected $hidden = [
@@ -31,9 +36,15 @@ class User extends Authenticatable
         ];
     }
 
-    public function employee()
+ 
+    public function manager()
     {
-        return $this->hasOne(Employee::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'manager_id', 'id');
+    }
+
+    public function timeEntries()
+    {
+        return $this->hasMany(TimeEntry::class, 'user_id', 'id');
     }
 
     public function isAdmin() : bool

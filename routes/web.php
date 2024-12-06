@@ -13,34 +13,31 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+Route::get('/', function (Request $request) {
+    if ($request->user()) {
+        return redirect()->route('dashboard'); 
+    }
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('login'); 
 });
-
 
 Route::get('/dashboard', function (Request $request) {
     return Inertia::render('Dashboard', [
-        'userRole' => $request->user()->role,
+        'userRole' => $request->user()->position,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::resource('employees', EmployeeController::class)->middleware(EnsureUserHasRole::class.':adm');
+Route::resource('employees', EmployeeController::class)->middleware(EnsureUserHasRole::class.':manager');
 
-Route::get('time-entries/filter/{startDate}/{endDate}', [TimeEntriesController::class, 'filter'])->middleware(EnsureUserHasRole::class.':adm')->name('points.filter');
-Route::get('time-entries/', [TimeEntriesController::class, 'index'])->middleware(EnsureUserHasRole::class.':adm')->name('points.index');
+Route::get('time-entries/filter/{startDate}/{endDate}', [TimeEntriesController::class, 'filter'])->middleware(EnsureUserHasRole::class.':manager')->name('points.filter');
+Route::get('time-entries/', [TimeEntriesController::class, 'index'])->middleware(EnsureUserHasRole::class.':manager')->name('points.index');
 
 Route::middleware(['auth', EnsureUserHasRole::class.':employee'])->group(function () {
     Route::get('time-entries/register', [TimeEntriesController::class, 'create'])->name('points.create');
     Route::post('time-entries/register', [TimeEntriesController::class, 'store'])->name('points.store');
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 require __DIR__ . '/auth.php';

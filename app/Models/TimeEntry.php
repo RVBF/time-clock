@@ -11,16 +11,11 @@ class TimeEntry extends Model
 
     protected $fillable = [
         'employee_id',
-        'type',
         'registered_at',
     ];
 
-    /**
-     * Relacionamento com o funcionário.
-     * Um registro de ponto pertence a um funcionário.
-     */
     public function employee()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(User::class, 'employee_id', 'id');
     }
 }

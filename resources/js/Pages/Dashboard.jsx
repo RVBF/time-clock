@@ -6,7 +6,7 @@ export default function Dashboard({ userRole }) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                <h2 className="text-xl font-semibold leading-tight text-white-1000">
                     Dashboard
                 </h2>
             }
@@ -17,17 +17,17 @@ export default function Dashboard({ userRole }) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <p>You're logged in as {userRole}!</p>
+                            <p>Seja bem vindo!</p>
                             <nav className="mt-4">
                                 <ul className="space-y-2">
-                                    {userRole === 'adm' && (
+                                    {userRole === 'manager' && (
                                         <>
                                             <li>
                                                 <Link
                                                     href="/employees"
                                                     className="text-blue-500 hover:text-blue-700"
                                                 >
-                                                    Manage Employees
+                                                    Gerenciar Funcionários
                                                 </Link>
                                             </li>
                                             <li>
@@ -35,7 +35,7 @@ export default function Dashboard({ userRole }) {
                                                     href="/time-entries"
                                                     className="text-blue-500 hover:text-blue-700"
                                                 >
-                                                    View Points
+                                                    Visualizar Marcação de ponto
                                                 </Link>
                                             </li>
                                         </>
@@ -47,7 +47,7 @@ export default function Dashboard({ userRole }) {
                                                     href="/time-entries/register"
                                                     className="text-blue-500 hover:text-blue-700"
                                                 >
-                                                    Register Point
+                                                    Registrar Ponto
                                                 </Link>
                                             </li>
                                             <li>
@@ -55,7 +55,7 @@ export default function Dashboard({ userRole }) {
                                                     href="/profile"
                                                     className="text-blue-500 hover:text-blue-700"
                                                 >
-                                                    Edit Profile
+                                                    Editar Perfil
                                                 </Link>
                                             </li>
                                         </>

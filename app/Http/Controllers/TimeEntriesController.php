@@ -17,28 +17,27 @@ class TimeEntriesController extends Controller
     
     public function filter(Request $request, $startDate=null, $endDate =null)
     {    
-        // Verifica se as datas foram passadas corretamente na requisição
+       $user = $request->user();
         if (!$startDate) {
-            $startDate = Carbon::now()->subMonth()->startOfDay(); // 1 mês atrás
+            $startDate = Carbon::now()->subMonth()->startOfDay();
         } else {
-            $startDate = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay(); // Verifica o formato da data
+            $startDate = Carbon::createFromFormat('Y-m-d', $startDate)->startOfDay();
         }
     
         if (!$endDate) {
-            $endDate = Carbon::now()->addDays(30)->endOfDay(); // Data atual + 30 dias
+            $endDate = Carbon::now()->addDays(30)->endOfDay();
         } else {
-            $endDate = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay(); // Verifica o formato da data
+            $endDate = Carbon::createFromFormat('Y-m-d', $endDate)->endOfDay();
         }
         
-        $query = TimeEntry::select('*')->with(['employee.user']);
+        $query = TimeEntry::select('*')->with(['employee.manager']);
         $query->whereBetween('registered_at', [$startDate, $endDate]);
-    
+        $query->whereHas('employee', function ($query) use ($user) {
+            $query->where('manager_id', $user->id);
+        });
         $timeEntries = $query->get();
         return response($timeEntries);
     }
-
-    
-    
 
     public function create()
     {
@@ -47,10 +46,9 @@ class TimeEntriesController extends Controller
 
     public function store(Request $request)
     {
-        $user = $request->user()->load('employee');
+        $user = $request->user();
         TimeEntry::create([
-            'type' => 'entrada',
-            'employee_id' => $user->employee->id,
+            'employee_id' => $user->id,
             'registered_at'=> Carbon::now(),
         ]);
         return response()->json(['message' => 'Ponto registrado com sucesso']);

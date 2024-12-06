@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('time_entries', function (Blueprint $table) {
             $table->id(); 
-            $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade'); 
-            $table->enum('type', ['entrada', 'saida']); 
             $table->timestamp('registered_at'); 
             $table->timestamps(); 
+            
+            $table->foreignId('employee_id')->constrained('users')->onDelete('cascade'); 
         });
     }
     

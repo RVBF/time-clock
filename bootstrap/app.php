@@ -16,12 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-            // EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
-            // 'guest:sanctum',
         ]);
         $middleware->api(prepend: [
-            // EnsureFrontendRequestsAreStateful::class,
         ]);
 
         //
